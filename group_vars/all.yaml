@@ -3,4 +3,5 @@
 ansible_python_interpreter: "/opt/bin/python"
 
 # IP addres of the manager
-manager_ip: "${manager_ip}"
+manager_ip: "10.212.21.12"
+
