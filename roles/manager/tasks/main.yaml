@@ -1,0 +1,17 @@
+---
+- name: Initialize master node
+  command: docker swarm init 
+
+- name: Get Worker node token
+  command: docker swarm join-token --quiet worker
+  register: worker_token
+
+- name: Show worker node token
+  debug: var=worker_token.stdout
+
+- name: Get Manager node token
+  command: docker swarm join-token --quiet manager
+  register: manager_token
+
+- name: Show manager node token
+  debug: var=manager_token.stdout

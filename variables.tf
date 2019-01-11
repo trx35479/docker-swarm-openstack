@@ -16,7 +16,7 @@ variable "PATH_TO_PUBLIC_KEY" {
 }
 
 variable "IMAGE_NAME" {
-  default = "ubuntu-xenial"
+  default = "coreOS"
 }
 
 variable "MAN_FLAVOR" {

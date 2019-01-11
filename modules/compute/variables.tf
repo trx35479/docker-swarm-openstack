@@ -33,3 +33,5 @@ variable "WORKER_FIPS" {
 variable "ROUTER_ID" {
   default = ""
 }
+
+variable "USER_DATA" {}

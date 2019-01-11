@@ -1,0 +1,25 @@
+---
+- name: Init Docker Swarm Mode
+  hosts: manager
+  become: true
+  gather_facts: false
+  roles:
+    - manager
+
+- name: Join managers of the swarm
+  hosts: standby-managers
+  become: true
+  gather_facts: false
+  vars:
+    manager_token: "{{ hostvars[groups['manager'][0]]['manager_token']['stdout'] }}"
+  roles:
+    - standby-managers
+
+- name: Join workers node 
+  hosts: workers
+  become: true
+  gather_facts: false
+  vars:
+    worker_token: "{{ hostvars[groups['manager'][0]]['worker_token']['stdout'] }}"
+  roles:
+    - workers

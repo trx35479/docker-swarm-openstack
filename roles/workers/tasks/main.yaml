@@ -1,0 +1,11 @@
+# Join worker node
+
+- name: Join the node to manager
+  command: docker swarm join --token {{ worker_token }} {{ manager_ip }}:2377
+  register: worker_join
+
+- name: Show result of joining the cluster
+  debug: var=worker_join.stdout
+
+- name: Show if errors occured during joining
+  debug: var=worker_join.stderr

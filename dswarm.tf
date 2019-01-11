@@ -42,6 +42,7 @@ module "compute" {
   MANAGER_FIPS         = "${module.fips.manager_fips}"
   STANDBY_MANAGER_FIPS = "${module.fips.standby_fips}"
   ROUTER_ID            = "${module.network.router_id}"
+  USER_DATA            = "${data.template_file.python.rendered}"
 }
 
 output "manager_fip" {

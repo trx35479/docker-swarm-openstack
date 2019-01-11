@@ -22,6 +22,8 @@ resource "openstack_compute_instance_v2" "manager" {
   metadata {
     depends_on = "${var.ROUTER_ID}"
   }
+
+  user_data = "${var.USER_DATA}"
 }
 
 resource "openstack_compute_instance_v2" "standby-manager" {
@@ -39,6 +41,8 @@ resource "openstack_compute_instance_v2" "standby-manager" {
   metadata {
     depends_on = "${var.ROUTER_ID}"
   }
+
+  user_data = "${var.USER_DATA}"
 }
 
 resource "openstack_compute_instance_v2" "worker" {
@@ -56,6 +60,8 @@ resource "openstack_compute_instance_v2" "worker" {
   metadata {
     depends_on = "${var.ROUTER_ID}"
   }
+
+  user_data = "${var.USER_DATA}"
 }
 
 resource "openstack_compute_floatingip_associate_v2" "manager" {

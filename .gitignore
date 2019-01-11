@@ -1,2 +1,4 @@
 *tfstate*
 .terraform/
+inventory
+group_vars/all.yaml
