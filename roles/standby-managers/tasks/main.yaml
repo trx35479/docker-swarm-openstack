@@ -1,8 +1,9 @@
 # Join manager node
 
 - name: Join the node to manager
-  command: docker swarm join --token {{ manager_token }} {{ manager_ip }}:2377
+  command: docker swarm join --token {{ standby_token }} {{ manager_ip }}:2377
   register: manager_join
+  ignore_errors: true
 
 - name: Show result of joining the manager to the cluster
   debug: var=manager_join.stdout

@@ -11,7 +11,7 @@
   become: true
   gather_facts: false
   vars:
-    manager_token: "{{ hostvars[groups['manager'][0]]['manager_token']['stdout'] }}"
+    standby_token: "{{ hostvars[groups['manager'][0]]['manager_token']['stdout'] }}"
   roles:
     - standby-managers
 

@@ -1,0 +1,38 @@
+# Scaling up managers and workers node
+---
+- name: Get token from leader of the masters
+  hosts: manager
+  gather_facts: false
+  become: true
+  tasks: 
+    - name: Get Worker node token
+      command: docker swarm join-token --quiet worker
+      register: worker_token
+
+    - name: Show worker node token
+      debug: var=worker_token.stdout
+
+    - name: Get Manager node token
+      command: docker swarm join-token --quiet manager
+      register: manager_token
+
+    - name: Show manager node token
+      debug: var=manager_token.stdout
+
+- name: Scaling Managers Node
+  hosts: standby-managers
+  gather_facts: false
+  become: true
+  vars:
+    standby_token: "{{ hostvars[groups['manager'][0]]['manager_token']['stdout'] }}"
+  roles:
+    - standby-managers
+
+- name: Scaling Workers Node
+  hosts: workers
+  gather_facts: false
+  become: true
+  vars:
+    worker_token: "{{ hostvars[groups['manager'][0]]['worker_token']['stdout'] }}"
+  roles:
+    - workers
