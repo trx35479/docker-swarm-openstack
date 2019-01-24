@@ -2,8 +2,17 @@ pipeline {
   agent any
   stages {
     stage('TF Init') {
-      steps {
-        sh 'terraform init'
+      parallel {
+        stage('TF Init') {
+          steps {
+            sh 'terraform init'
+          }
+        }
+        stage('Source Env') {
+          steps {
+            sh 'source ~/kuberc'
+          }
+        }
       }
     }
     stage('Tf Plan') {
