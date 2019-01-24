@@ -13,13 +13,17 @@ pipeline {
     }
     stage('Tf Apply') {
       steps {
-        sh 'terraform apply -input=false osp_stack'
+        sh '''try {
+  terraform apply -input=false osp_stack
+} catch (Exception e) {
+  terraform destroy -input=false
+}'''
+        }
       }
-    }
-    stage('Tf Destroy') {
-      steps {
-        sh 'terraform destroy -input=false'
+      stage('Tf Destroy') {
+        steps {
+          sh 'terraform destroy -input=false'
+        }
       }
     }
   }
-}
