@@ -1,0 +1,10 @@
+# Clear any old environment that may conflict.
+for key in $( set | awk '{FS="="}  /^OS_/ {print $1}' ); do unset $key ; done
+export OS_USERNAME=osev3
+export OS_PROJECT_ID=f5ce3b24704f45cb9b6fa54248315d6b
+export OS_PROJECT_NAME=OpenShitfv3
+export OS_PASSWORD=ocp1234!
+export OS_AUTH_URL=http://10.230.4.154:5000/v2.0
+export OS_REGION_NAME=regionOne
+export OS_INTERFACE=public
+export OS_INDENTITY_API_VERSION=2
