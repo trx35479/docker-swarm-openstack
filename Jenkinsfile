@@ -1,11 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('Source OpenStack Env') {
-      steps {
-        sh 'source kuberc'
-      }
-    }
     stage('TF Init') {
       steps {
         sh 'terraform init'
