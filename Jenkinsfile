@@ -13,17 +13,23 @@ pipeline {
     }
     stage('Tf Apply') {
       steps {
-        sh '''try {
-  terraform apply -input=false osp_stack
-} catch (Exception e) {
-  terraform destroy -input=false
-}'''
-        }
+        sh '''terraform apply -input=false osp_stack
+'''
       }
-      stage('Tf Destroy') {
-        steps {
-          sh 'terraform destroy -input=false'
-        }
+    }
+    stage('Tf Destroy') {
+      steps {
+        sh 'terraform destroy -input=false'
       }
     }
   }
+  environment {
+    OS_USERNAME = 'osev3'
+    OS_PROJECT_ID = 'f5ce3b24704f45cb9b6fa54248315d6b'
+    OS_PROJECT_NAME = 'OpenShitfv3'
+    OS_PASSWORD = 'ocp1234!'
+    OS_REGION_NAME = 'regionOne'
+    OS_INTERFACE = 'public'
+    OS_INDENTITY_API_VERSION = '2'
+  }
+}
