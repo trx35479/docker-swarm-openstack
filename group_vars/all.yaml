@@ -1,7 +1,7 @@
 # This is for CoreOS - python installation is not in the default /usr/bin
 # Comment this if the tarnet OS os mainstream linux release
-ansible_python_interpreter: "/opt/bin/python"
+ansible_python_interpreter: "/usr/bin/python"
 
 # IP addres of the manager
-manager_ip: "10.212.21.10"
+manager_ip: "10.212.21.6"
 

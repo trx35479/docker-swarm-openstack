@@ -6,11 +6,13 @@ data "template_file" "dynamic_inventory" {
   depends_on = [
     "module.fips",
     "module.network",
-    "module.compute",
+    "module.manager",
+    "module.standby",
+    "module.worker",
   ]
 
   vars {
-    manager          = "${module.fips.manager_fips}"
+    manager          = "${join("\n", module.fips.manager_fips)}"
     standby-managers = "${join("\n", module.fips.standby_fips)}"
     workers          = "${join("\n", module.fips.worker_fips)}"
   }
@@ -34,11 +36,14 @@ data "template_file" "get_private_ip" {
   depends_on = [
     "module.fips",
     "module.network",
-    "module.compute",
+    "module.manager",
+    "module.standby",
+    "module.worker",
   ]
 
   vars {
-    manager_ip = "${module.compute.manager_private_ip}"
+    python_interpreter = "${var.IMAGE_NAME == "coreOS" ? "/opt/bin/python" : "/usr/bin/python"}"
+    manager_ip = "${element(module.manager.private_ip, 0)}"
   }
 }
 

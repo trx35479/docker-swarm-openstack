@@ -18,11 +18,12 @@ resource "openstack_networking_secgroup_v2" "ext-secgroup" {
 }
 
 resource "openstack_networking_secgroup_rule_v2" "ext-secgroup-rule" {
+  count             = "${length(var.PORT_RANGE)}"
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "tcp"
-  port_range_min    = 22
-  port_range_max    = 22
+  port_range_min    = "${element(var.PORT_RANGE, count.index)}"
+  port_range_max    = "${element(var.PORT_RANGE, count.index)}"
   remote_ip_prefix  = "0.0.0.0/0"
   security_group_id = "${openstack_networking_secgroup_v2.ext-secgroup.id}"
 }

@@ -1,32 +1,24 @@
 variable "CLUSTER_NAME" {}
 
-variable "IMAGE_NAME" {}
+variable "CLUSTER_ROLE" {}
 
-variable "PATH_TO_PUBLIC_KEY" {}
+variable "IMAGE_ID" {}
+
+variable "KEYPAIR" {}
 
 variable "NETWORK_NAME" {}
 
-variable "INT_SEC" {}
-
-variable "EXT_SEC" {}
-
-variable "MAN_FLAVOR" {}
-
-variable "WOR_FLAVOR" {}
-
-variable "NUMBER_OF_WORKERS" {}
-
-variable "NUMBER_OF_MANAGER" {}
-
-variable "MANAGER_FIPS" {
-  type = "string"
-}
-
-variable "STANDBY_MANAGER_FIPS" {
+variable "SECURITY_GROUPS" {
   type = "list"
 }
 
-variable "WORKER_FIPS" {
+variable "FLAVOR" {}
+
+variable "COUNT" {
+  type = "list"
+}
+
+variable "FIPS" {
   type = "list"
 }
 
@@ -34,4 +26,6 @@ variable "ROUTER_ID" {
   default = ""
 }
 
-variable "USER_DATA" {}
+variable "USER_DATA" {
+  default = ""
+}
