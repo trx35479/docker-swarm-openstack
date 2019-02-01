@@ -7,8 +7,8 @@ variable "PATH_TO_PUBLIC_KEY" {
 }
 
 variable "IMAGE_NAME" {
-  #default = "coreOS"
-  default = "centos7"
+  default = "coreOS"
+  #default = "centos7"
 }
 
 variable "FLAVOR" {

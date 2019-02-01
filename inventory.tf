@@ -9,6 +9,7 @@ data "template_file" "dynamic_inventory" {
     "module.manager",
     "module.standby",
     "module.worker",
+    "module.loadbalancer",
   ]
 
   vars {
@@ -39,11 +40,12 @@ data "template_file" "get_private_ip" {
     "module.manager",
     "module.standby",
     "module.worker",
+    "module.loadbalancer",
   ]
 
   vars {
     python_interpreter = "${var.IMAGE_NAME == "coreOS" ? "/opt/bin/python" : "/usr/bin/python"}"
-    manager_ip = "${element(module.manager.private_ip, 0)}"
+    manager_ip         = "${element(module.manager.private_ip, 0)}"
   }
 }
 

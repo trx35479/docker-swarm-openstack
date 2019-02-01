@@ -33,7 +33,7 @@ module "secgroups" {
   source = "modules/secgroups"
 
   SEC_NAME   = "${var.CLUSTER_NAME}"
-  PORT_RANGE = ["22", "80", "8080"]
+  PORT_RANGE = ["22", "80", "8080", "3000"]
 }
 
 module "fips" {
@@ -41,7 +41,7 @@ module "fips" {
 
   PUBLIC_NET        = "${var.PUBLIC_NET}"
   NUMBER_OF_MASTER  = 1
-  NUMBER_OF_WORKERS = 2
+  NUMBER_OF_WORKERS = 3
   NUMBER_OF_MANAGER = 2
   ROUTER_ID         = "${module.network.router_id}"
 }
@@ -86,11 +86,26 @@ module "worker" {
   KEYPAIR         = "${openstack_compute_keypair_v2.mykeypair.id}"
   IMAGE_ID        = "${data.openstack_images_image_v2.coreos.id}"
   FLAVOR          = "${data.openstack_compute_flavor_v2.flavor.id}"
-  COUNT           = ["true", 2]
+  COUNT           = ["true", 3]
   NETWORK_NAME    = "${module.network.network_name}"
   SECURITY_GROUPS = "${module.secgroups.secgroups}"
   FIPS            = "${module.fips.worker_fips}"
   USER_DATA       = "${local.USER_DATA}"
+  ROUTER_ID       = "${module.network.router_id}"
+}
+
+module "loadbalancer" {
+  source = "modules/loadbalancer"
+
+  CLUSTER_NAME    = "${var.CLUSTER_NAME}"
+  VIP_NETWORK     = "${var.PUBLIC_NET}"
+  SUBNET_ID       = "${module.network.subnet_id}"
+  SECURITY_GROUPS = ["${module.secgroups.ext_secgroup_id}"]
+  COUNT           = 6
+  NODES           = ["${module.manager.private_ip}", "${module.standby.private_ip}", "${module.worker.private_ip}"]
+  PROTOCOL        = "HTTP"
+  PROTOCOL_PORT   = 3000
+  MONITOR_TYPE    = "PING"
   ROUTER_ID       = "${module.network.router_id}"
 }
 
@@ -104,4 +119,8 @@ output "standby_manager_fips" {
 
 output "worker_fips" {
   value = "${module.fips.worker_fips}"
+}
+
+output "loadbalancer_ip" {
+  value = "${module.loadbalancer.vip_port_address}"
 }
