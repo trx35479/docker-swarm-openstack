@@ -5,20 +5,8 @@ resource "null_resource" "dummy_dependency" {
   }
 }
 
-resource "openstack_networking_floatingip_v2" "manager" {
+resource "openstack_networking_floatingip_v2" "fips" {
   pool       = "${var.PUBLIC_NET}"
-  count      = "${var.NUMBER_OF_MASTER}"
-  depends_on = ["null_resource.dummy_dependency"]
-}
-
-resource "openstack_networking_floatingip_v2" "standby-manager" {
-  pool       = "${var.PUBLIC_NET}"
-  count      = "${var.NUMBER_OF_MANAGER}"
-  depends_on = ["null_resource.dummy_dependency"]
-}
-
-resource "openstack_networking_floatingip_v2" "worker" {
-  pool       = "${var.PUBLIC_NET}"
-  count      = "${var.NUMBER_OF_WORKERS}"
+  count      = "${var.COUNT}"
   depends_on = ["null_resource.dummy_dependency"]
 }

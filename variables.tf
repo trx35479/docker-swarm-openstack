@@ -7,8 +7,9 @@ variable "PATH_TO_PUBLIC_KEY" {
 }
 
 variable "IMAGE_NAME" {
-  default = "coreOS"
-  #default = "centos7"
+  #default = "coreOS"
+
+  default = "centos7"
 }
 
 variable "FLAVOR" {
@@ -17,4 +18,12 @@ variable "FLAVOR" {
 
 variable "PUBLIC_NET" {
   default = "public"
+}
+
+variable "NUMBER_OF_MANAGER" {
+  default = 3
+}
+
+variable "NUMBER_OF_WORKERS" {
+  default = 3
 }

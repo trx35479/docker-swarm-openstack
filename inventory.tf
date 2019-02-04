@@ -4,18 +4,18 @@ data "template_file" "dynamic_inventory" {
   template = "${file("templates/inventory.tpl")}"
 
   depends_on = [
-    "module.fips",
+    "module.fip_manager",
+    "module.fip_workers",
     "module.network",
     "module.manager",
-    "module.standby",
     "module.worker",
     "module.loadbalancer",
   ]
 
   vars {
-    manager          = "${join("\n", module.fips.manager_fips)}"
-    standby-managers = "${join("\n", module.fips.standby_fips)}"
-    workers          = "${join("\n", module.fips.worker_fips)}"
+    manager          = "${join("\n", slice(module.fip_manager.fips, 0, 1))}"
+    standby-managers = "${join("\n", slice(module.fip_manager.fips, 1, 3))}"
+    workers          = "${join("\n", module.fip_workers.fips)}"
   }
 }
 
@@ -35,10 +35,10 @@ data "template_file" "get_private_ip" {
   template = "${file("templates/manager_ip.tpl")}"
 
   depends_on = [
-    "module.fips",
+    "module.fip_manager",
+    "module.fip_workers",
     "module.network",
     "module.manager",
-    "module.standby",
     "module.worker",
     "module.loadbalancer",
   ]
