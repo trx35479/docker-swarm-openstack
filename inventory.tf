@@ -14,7 +14,7 @@ data "template_file" "dynamic_inventory" {
 
   vars {
     manager          = "${join("\n", slice(module.fip_manager.fips, 0, 1))}"
-    standby-managers = "${join("\n", slice(module.fip_manager.fips, 1, 3))}"
+    standby-managers = "${join("\n", slice(module.fip_manager.fips, 1, var.NUMBER_OF_MANAGER))}"
     workers          = "${join("\n", module.fip_workers.fips)}"
   }
 }

@@ -104,7 +104,7 @@ output "manager_fip" {
 }
 
 output "standby_manager_fips" {
-  value = "${slice(module.fip_manager.fips, 1, 3)}"
+  value = "${slice(module.fip_manager.fips, 1, var.NUMBER_OF_MANAGER)}"
 }
 
 output "worker_fips" {
